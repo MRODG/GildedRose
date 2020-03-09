@@ -34,5 +34,4 @@ public class Helper{
     protected static void decSellIn(Item item){
         item.setSellIn(item.getSellIn()-1);
     }
-
 }

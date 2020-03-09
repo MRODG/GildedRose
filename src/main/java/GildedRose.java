@@ -20,15 +20,72 @@ public class GildedRose {
         items.add(new Item("Sulfuras, Hand of Ragnaros", 0, 80));
         items.add(new Item("Backstage passes to a TAFKAL80ETC concert", 15, 20));
         items.add(new Item("Conjured Mana Cake", 3, 6));
+        items.add(new Item("Backstage passes to a TAFKAL80ETC concert Pt2", 0, 20));
 
         updateQuality();
+
+        for(Item item : items){
+            System.out.println("Name: "+item.name +" SellBy: "+ item.sellIn +" Quality: "+ item.quality);
+        }
 }
-
-
-	
     public static void updateQuality()
     {
-        for (int i = 0; i < items.size(); i++)
+        for(Item item : items){
+            switch(Helper.getItemType(item)){
+
+                case AgedBrie:
+                    //item.setSellIn(item.getSellIn()-1);
+                    Helper.decSellIn(item);
+                    if(!Helper.qualityLimits(item.getQuality()+1)){
+                        item.setQuality(item.getQuality()+1);
+                    }
+                    break;
+
+                case Backstage:
+                    //item.setSellIn(item.getSellIn()-1);
+                    Helper.decSellIn(item);
+                    if(item.getSellIn() < 0){
+                        item.setQuality(0);
+                    }
+                    else if(item.getSellIn() <= 5){
+                        if(!Helper.qualityLimits(item.getQuality()+3)){
+                            item.setQuality(item.getQuality()+3);
+                        }
+                    }
+                    else if(item.getSellIn() <= 10){
+                        if(!Helper.qualityLimits(item.getQuality()+2)){
+                            item.setQuality(item.getQuality()+2);
+                        }
+                    }
+                    else {
+                        if(!Helper.qualityLimits(item.getQuality()+1)){
+                            item.setQuality(item.getQuality()+1);
+                        }
+                    }
+                    break;
+
+                case Sulfuras:
+                    break;
+
+                case Conjured:
+                    //item.setSellIn(item.getSellIn()-1);
+                    Helper.decSellIn(item);
+                    if(!Helper.qualityLimits(item.getQuality()-2)){
+                        item.setQuality(item.getQuality()-2);
+                    }
+                    break;
+
+                default:
+                    //item.setSellIn(item.getSellIn()-1);
+                    Helper.decSellIn(item);
+                    if(!Helper.qualityLimits(item.getQuality()-1)){
+                        item.setQuality(item.getQuality()-1);
+                    }
+                    break;
+            }
+        }
+
+        /*for (int i = 0; i < items.size(); i++)
         {
             if ((!"Aged Brie".equals(items.get(i).getName())) && !"Backstage passes to a TAFKAL80ETC concert".equals(items.get(i).getName())) 
             {
@@ -99,7 +156,7 @@ public class GildedRose {
                     }
                 }
             }
-        }
+        }*/
     }
 
 }
